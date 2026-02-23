@@ -5,7 +5,6 @@ loadEnv(process.env.NODE_ENV || 'development', process.cwd())
 module.exports = defineConfig({
   projectConfig: {
     databaseUrl: process.env.DATABASE_URL,
-    redisUrl: process.env.REDIS_URL,
     http: {
       storeCors: "https://aicasthub.co,http://localhost:3000,http://localhost:3001,http://localhost:8000,http://127.0.0.1:3000,http://127.0.0.1:3001",
       adminCors: "https://aicasthub.co,https://admin.aicasthub.co,http://localhost:5173,http://localhost:9000,http://localhost:7000,http://localhost:7001",
