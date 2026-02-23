@@ -15,8 +15,9 @@ const AnalyticsPage = () => {
     const fetchMetrics = async (p: string) => {
         setLoading(true)
         try {
-            const res = await fetch(`/admin/store-metrics?period=${p}`, {
-                method: "GET"
+            const res = await fetch(`/api/medusa/admin/store-metrics?period=${p}`, {
+                method: "GET",
+                credentials: "include"
             })
             const data = await res.json();
             setMetrics(data.metrics)

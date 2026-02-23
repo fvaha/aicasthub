@@ -19,7 +19,11 @@ const FeesPage = () => {
     const { data: configData, refetch } = useQuery({
         queryKey: ["platform-config"],
         queryFn: async () => {
-            const res = await fetch("/api/store/platform-config")
+            const res = await fetch("/api/medusa/store/platform-config", {
+                headers: {
+                    "x-publishable-api-key": "pk_8e44fd37f7eff5b83d637efce7697cac4b793d7a4598153048380610bbb733aa"
+                }
+            })
             return res.json()
         }
     })
@@ -34,7 +38,7 @@ const FeesPage = () => {
         setIsSaving(true)
         try {
             // Securely save via Admin API (Authenticated)
-            const res = await fetch('/api/admin/platform-config', {
+            const res = await fetch('/api/medusa/admin/platform-config', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

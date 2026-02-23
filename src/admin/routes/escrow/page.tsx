@@ -11,7 +11,9 @@ const EscrowPage = () => {
     const { data, isLoading, isError, refetch } = useQuery({
         queryKey: ["admin_orders"],
         queryFn: async () => {
-            const response = await fetch("/admin/orders?fields=id,email,total,currency_code,status,metadata,created_at,summary,items.*")
+            const response = await fetch("/api/medusa/admin/orders?fields=id,email,total,currency_code,status,metadata,created_at,summary,items.*", {
+                credentials: "include"
+            })
             if (!response.ok) throw new Error("Failed to fetch")
             return response.json()
         }
@@ -22,7 +24,9 @@ const EscrowPage = () => {
         queryKey: ["order_messages", selectedOrder?.id],
         queryFn: async () => {
             if (!selectedOrder?.id) return { messages: [] }
-            const response = await fetch(`/admin/orders/${selectedOrder.id}/messages`)
+            const response = await fetch(`/api/medusa/admin/orders/${selectedOrder.id}/messages`, {
+                credentials: "include"
+            })
             if (!response.ok) throw new Error("Failed to fetch messages")
             return response.json()
         },
@@ -32,7 +36,8 @@ const EscrowPage = () => {
     const mutation = useMutation({
         mutationFn: async ({ orderId, status }: { orderId: string, status: string }) => {
             // 1. Update our custom escrow metadata
-            await fetch(`/admin/orders/${orderId}`, {
+            await fetch(`/api/medusa/admin/orders/${orderId}`, {
+                credentials: "include",
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
@@ -43,7 +48,8 @@ const EscrowPage = () => {
             // 2. If releasing, also try to mark as completed in Medusa Core
             if (status === 'released') {
                 try {
-                    await fetch(`/admin/orders/${orderId}/complete`, {
+                    await fetch(`/api/medusa/admin/orders/${orderId}/complete`, {
+                        credentials: "include",
                         method: "POST",
                         headers: { "Content-Type": "application/json" }
                     })
