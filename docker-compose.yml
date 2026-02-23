@@ -7,7 +7,7 @@ services:
 
   backend:
     build:
-      context: ./aicasthub
+      context: .
       dockerfile: Dockerfile
     restart: always
     ports:
@@ -17,21 +17,9 @@ services:
       - REDIS_URL=redis://redis:6379
       - JWT_SECRET=${JWT_SECRET}
       - COOKIE_SECRET=${COOKIE_SECRET}
-      - STORE_CORS=https://aicasthub.co,http://localhost:3000,http://localhost:3009
-      - ADMIN_CORS=https://aicasthub.co/admin
-      - AUTH_CORS=https://aicasthub.co
+      - STORE_CORS=${STORE_CORS}
+      - ADMIN_CORS=${ADMIN_CORS}
+      - AUTH_CORS=${AUTH_CORS}
       - DISABLE_MEDUSA_ADMIN=true
     depends_on:
       - redis
-
-  frontend:
-    build:
-      context: ./aicasthub-web
-      dockerfile: Dockerfile
-    restart: always
-    ports:
-      - "3009:3009"
-    environment:
-      - NEXT_PUBLIC_MEDUSA_URL=https://aicasthub.co/api/medusa
-    depends_on:
-      - backend
