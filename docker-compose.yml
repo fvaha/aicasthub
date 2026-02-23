@@ -15,11 +15,12 @@ services:
     environment:
       - DATABASE_URL=${DATABASE_URL}
       - REDIS_URL=redis://redis:6379
-      - JWT_SECRET=supersecret
-      - COOKIE_SECRET=supersecret
+      - JWT_SECRET=${JWT_SECRET}
+      - COOKIE_SECRET=${COOKIE_SECRET}
       - STORE_CORS=https://aicasthub.co,http://localhost:3000,http://localhost:3009
-      - ADMIN_CORS=https://aicasthub.co,https://admin.aicasthub.co
+      - ADMIN_CORS=https://aicasthub.co/admin,https://admin.aicasthub.co
       - AUTH_CORS=https://aicasthub.co,https://admin.aicasthub.co
+      - DISABLE_MEDUSA_ADMIN=true
     depends_on:
       - redis
 
